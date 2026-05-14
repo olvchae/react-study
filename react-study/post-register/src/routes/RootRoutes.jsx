@@ -1,18 +1,44 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import Layout from "../components/Layout/Layout";
 import AuthRoutes from "./AuthRoutes";
+import { useAuthentication } from "../hooks/queries/useAuthentication";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 
 function RootRoutes() {
+    const {pathname} = useLocation();
+    const navigate = useNavigate();
+    const authenticationQuery = useAuthentication(localStorage.getItem("accessToken"));
 
-    return (
+    useEffect(() => {
+        if (!authenticationQuery.isLoading) {
+            const status = authenticationQuery.data.status;
+            if (status !== 200 && pathname.startsWith("/auth/")) {
+                navigate("/auth/signin", {
+                    replace: true,
+                });
+            }
+            if (status === 200 && pathname.startsWith("/auth/")) {
+                navigate("/", {
+                    replace: true,
+                });
+            }
+        }
+    }, [authenticationQuery.isLoading]);
+    
+    return (  
         <>
-            <Routes>
-                <Route path="/" element={<></>} />
-
-                <Route path="/auth/*" element={<AuthRoutes />} />
-                <Route path="*" element={<>페이지를 찾을 수 없습니다.</>} />
-            </Routes>
+            {
+                authenticationQuery.isLoadig 
+                    ? <h1>로딩중</h1>
+                    : <Routes>
+                        <Route path="/" element={<></>} />
+                        <Route path="/auth/*" element={<AuthRoutes />} />
+                        <Route path="*" element={<>페이지를 찾을 수 없습니다.</>} />
+                    </Routes>
+                    
+            }   
         </>
     )
 }

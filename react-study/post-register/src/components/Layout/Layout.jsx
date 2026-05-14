@@ -8,7 +8,6 @@ function Layout({children}) {
             <div css={s.layout}>
                 <div css={s.container}>
                     {children}
-                    
                 </div>
             </div>
         </>
