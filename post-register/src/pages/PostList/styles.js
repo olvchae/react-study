@@ -43,7 +43,7 @@ export const card = css`
     border-radius: 10px;
     padding: 20px;
     width: 300px;
-    height: 120px;
+    height: 250px;
     background-color: #ffffff;
     cursor: pointer;
 

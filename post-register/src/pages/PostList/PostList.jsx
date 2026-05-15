@@ -25,8 +25,6 @@ function PostList() {
                     <li css={s.card}></li>
                     <li css={s.card}></li>
                     <li css={s.card}></li>
-                    <li css={s.card}></li>
-                    <li css={s.card}></li>
                 </ul>
                 <div css={s.pagination}>
                     <Button><FiChevronLeft /></Button>
