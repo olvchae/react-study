@@ -15,7 +15,7 @@ function Signin() {
     const requestSignin = async (email, password) => {
         const users = JSON.parse(localStorage.getItem("users"));
         const foundUser = users.find(user => user.email === email && user.password === password);
-        if(!foundUser) {
+        if (!foundUser) {
             throw {
                 status: 401,
                 data: "로그인 실패",
@@ -25,7 +25,7 @@ function Signin() {
             status: 200,
             data: {
                 accessToken: JSON.stringify({secret: "abcd1234", userId: foundUser.id}),
-            } // 나중에 JWT로 대체
+            }   // 나중에 JWT로 대체
         }
     }
 
@@ -39,7 +39,7 @@ function Signin() {
     }
 
     const handleSigninOnClick = async () => {
-        try{
+        try {
             const response = await requestSignin(inputValues.email, inputValues.password);
             localStorage.setItem("accessToken", response.data.accessToken);
             navigate("/", {
@@ -48,23 +48,15 @@ function Signin() {
         } catch(error) {
             alert(error.data);
         }
-
-
-        // localStorage.setItem("loginUser", JSON.stringify(tempUser));  //localStorage는 항상 json 또는 문자열로 넣어야 함
-        // const userJson = localStorage.getItem("loginUSer");
-        // const user = JSON.parse(userJson);
-        // console.log(user);
     }
 
     return (
-        <>
-            <div>
-                <Link to={"/auth/signup"}>회원가입</Link>
-                <TextInput title={"이메일"} name={"email"} value={inputValues.email} onChange={handleInputOnChange}/>
-                <PasswordInput title={"비밀번호"} name={"password"} value={inputValues.password} onChange={handleInputOnChange} />
-                <button onClick={handleSigninOnClick}>로그인</button>
-            </div>
-        </>
+        <div>
+            <Link to={"/auth/signup"}>회원가입</Link>
+            <TextInput title={"이메일"} name={"email"} value={inputValues.email} onChange={handleInputOnChange} />
+            <PasswordInput title={"비밀번호"} name={"password"} value={inputValues.password} onChange={handleInputOnChange} />
+            <button onClick={handleSigninOnClick}>로그인</button>
+        </div>
     )
 }
 

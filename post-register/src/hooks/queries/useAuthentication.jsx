@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 async function requestAuthentication(accessToken) {
-    const secret = "abcd1234"
+    const secret = "abcd1234";
+
     if (!accessToken) {
         throw {
             status: 403,
